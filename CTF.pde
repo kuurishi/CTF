@@ -1,5 +1,7 @@
- //--------------Kristina Kosseva-----------------//
+//--------------Kristina Kosseva-----------------//
 //---------------------CTF-----------------------//
+//            version 1.1   26-Feb-2020
+
 
 final int upDirection = 0;
 final int downDirection = 1;
@@ -25,21 +27,24 @@ void setup() {
 
 
 void draw() {
+  
   background(255,255,255);
       // 1. keypresed() eventually updates the players positions (chanegs x, y coordinates )
       // calls player.movePlayer() method, only if a move key was pressed
-      // 2. Dispaly the players
-  player1.drawPlayer();
-  player2.drawPlayer();
-      // 3. Check for walls collisions
-  player1.checkBoundaryCollision();
-  player2.checkBoundaryCollision();
-      // 4. Check players collision
+      // 2. Check for walls collisions
+      // 3. Check players collision
+      // 4. Dispaly the players
       
   if (player1.wasMoved) {
-      player1.checkCollision(player2); //x,y is for player 1
+    player1.checkBoundaryCollision();
+    player1.checkCollision(player2); //x,y is for player 1
   }
+  player1.drawPlayer();
+  //
   if (player2.wasMoved) {
+    player2.checkBoundaryCollision();
     player2.checkCollision(player1); // x,y is for player 2
   }
+  player2.drawPlayer();
+
 }
