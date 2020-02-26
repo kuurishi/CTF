@@ -9,8 +9,7 @@ private class Object {
   int lastDirection;
   boolean wasMoved;
   
-  Object ()
-  {
+  Object () {
     pv = new PVector (0,0);
     colr = color(0,0,0);
     speed = 0;
@@ -21,9 +20,9 @@ private class Object {
 }
 
 
-public class Player extends Object {
+public class Player extends Object  {
 
-  //Object obj = new Object();
+  
   int playerSize; //Radius of the Player (circle)
 
 
@@ -36,46 +35,49 @@ public class Player extends Object {
 
 
   void drawPlayer() {
-     stroke(0);
+    stroke(0);
     fill(colr);
     ellipse(pv.x, pv.y, playerSize, playerSize);
   }
 
 
   void checkBoundaryCollision () {
-    if ( pv.y  < playerSize/2 ) {
-      pv.y = playerSize/2;
-    }
-    else if ( pv.y + playerSize/2 > maxY ) {
-      pv.y = maxY -playerSize/2;
-    }  
     
     if ( pv.x < playerSize/2 ) {
-      pv.x  = playerSize/2;
+      pv.x  = playerSize;
     }
     else if ( pv.x + playerSize/2 > maxX ) {
-      pv.x = maxX - playerSize/2 ;
+      pv.x = maxX - playerSize;
     }
+    
+    if ( pv.y  < playerSize/2 ) {
+      pv.y = playerSize;
+    }
+    else if ( pv.y + playerSize/2 > maxY ) {
+      pv.y = maxY -playerSize;
+    }  
   }
 
 
 //
 // http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
 //
-  void checkCollision(Player other) {
+  boolean checkCollision(Player other) {
     float distance = PVector.dist( pv, other.pv);
     if (distance < playerSize ) {
       if (lastDirection == rightDirection) {
-        pv.x -= playerSize/4;
+        pv.x -= playerSize/2;
       } else if (lastDirection == leftDirection) {
-        pv.x += playerSize/4;
+        pv.x += playerSize/2;
       } else if (lastDirection == upDirection) {
-        pv.y += playerSize/4;
+        pv.y += playerSize/2;
       } else if (lastDirection == downDirection) {
-        pv.y -= playerSize/4;
+        pv.y -= playerSize/2;
       }
+      return true; 
     }
     wasMoved = false;
+    return false;
   }
 
 

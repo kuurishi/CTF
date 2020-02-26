@@ -1,82 +1,127 @@
-/* class Flag {
 
-  int posX, posY; //Center Coordinates of Player Picture
-  int flagSize; //Radius of the Player (circle)
-  color colr; //Color of the Player
+public class Flag extends Object {
 
+  
+  int flagSize; //Radius of the flag (rect)
+  boolean isCaptured;
 
-  Player(int x, int y, color c) {
-    flagSize = 50;
-    posX = x;
-    posY = y;
+  Flag(int x, int y, color c) {
+    flagSize = 30;
+    isCaptured = false;
+    pv.set(x, y);
     colr = c;
   }
 
 
   void drawFlag() {
-
-    fill(colr);
-    ellipse(posX, posY, flagSize, flagSize);
+    stroke(0);
+    
+     
+    if (isCaptured == true){
+      fill(20,20,20);
+    }
+    else{
+      fill(colr);
+    }
+    
+    
+    rect(pv.x, pv.y, flagSize, flagSize);
   }
-
-
-
-
-
-
-
-
-}
-
-
-/* 
-
-----------------------Flag Looks/Characteristics:------------------------------
-
-  Flag 1:
-    - default state
-    - item boost state
   
-  Flag 2:
-    - default state
-    - item boost state
+  
 
-class flag()
------------------Player has the Flag:-------------------
 
+  //
+  // http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
+  //
+  
+  
+
+  //
+  boolean isFlagCaptured(Player player) { 
+    // pv.x is the X coordinate of the flag; pv.y is the Y coordiante of teh flag
  
-  Player 1 has Flag:
-
-    If (PlayerPos == FlagPos other){
-      FlagPos other =PlayerPos; 
-      
-      keep this state until PlayerPos = BorderPlayer
-      or playercollision
-    }
+    float distance = PVector.dist( pv, player.pv);
     
+      if (distance < flagSize) {
+        isCaptured = true;
+        pv.x = player.pv.x;
+        pv.y = player.pv.y;
+        print("captured");
+      }
+      else {
+        isCaptured = false;
+      }
       
-    if (Player1Pos == Flag2Pos) && Player1Pos == BorderPlayer1{
-      display "Winner: Player 1"
+      return isCaptured;
       
-    }
-      
+  }
     
-    
-  Player 2 has Flag:
+     
+}
+    /* 
+     
+     
+     
+     
+           
+   //if (player.distance){ //flag is captured
+     if (flag.pv = player.pv){
+     switch(){
+     case 'player vs player collision': 
+     drop flag;
+     playerSpeed = 0 for 3 seconds;
+     case 'score': 
+     case 1 = false;
+     score point;
+     }
 
-    If (Player2Pos == Flag1Pos){
-      Flag1Pos=Player2Pos; 
-      keep this state until Player2Pos = BorderPlayer2
-      or playercollision
-    }
-    
-    if (Player2Pos == Flag1Pos) && Player2Pos == BorderPlayer2{
-      display "Winner: Player 2"
-    }
-      
-
-
-
-
-
-*/
+     else{
+     return;
+     }
+     
+     
+     float distance = PVector.dist(Flag, Player);
+     if (distance < flagSize) {
+     if (lastDirection == rightDirection) {
+     pv.x -= flagSize/2;
+     } else if (lastDirection == leftDirection) {
+     pv.x += playerSize/2;
+     } else if (lastDirection == upDirection) {
+     pv.y += playerSize/2;
+     } else if (lastDirection == downDirection) {
+     pv.y -= playerSize/2;
+     }
+     }
+     wasMoved = false;
+     }
+     
+     
+     void movePlayer(int n) {
+     
+     lastDirection = direction;
+     wasMoved = true;
+     
+     switch ( direction ) {
+     case upDirection:
+     pv.y -= speed;
+     break;
+     
+     case downDirection:
+     pv.y += speed;
+     break;
+     
+     case leftDirection:
+     pv.x -= speed;
+     break;
+     
+     case rightDirection:
+     pv.x += speed;
+     break;
+     
+     default:
+     return;
+     }
+     }
+     }
+     */

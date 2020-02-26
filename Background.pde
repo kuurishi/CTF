@@ -1,25 +1,14 @@
-/*   PImage bg;
-int y;
-
-void setup() {
-  size(640, 360);
-  // The background image must be the same size as the parameters
-  // into the size() method. In this program, the size of the image
-  // is 640 x 360 pixels.
-  bg = loadImage("moonwalk.jpg");
-}
-
-void draw() {
-  background(bg);
+void drawMap(){
   
-  stroke(226, 204, 0);
-  line(0, y, width, y);
+  noStroke();
+  fill(200,30,60,90);
+  rect(0,0,width/2,height); //red background
   
-  y++;
-  if (y > height) {
-    y = 0; 
-  }
+  fill(60,30,200,90);
+  rect(width/2,0,width/2,height); //blue background
+  
+  
+  
+  
+  
 }
-
-
-*/
