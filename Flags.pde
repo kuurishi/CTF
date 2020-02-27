@@ -13,11 +13,11 @@ public class Flag extends Object {
   // Flag constructor - sets the default coordinates and default color
   //
   Flag(int x, int y, color c) {
-    initalX = x;
-    initalY = y;
+    homeX = x;
+    homeY = y;
     initialColor = c;
     ResetCoordinates();    // sets the current coordinates and color to the default (inital) values; 
-    flagSize = 30;
+    flagSize = flagSizeParameter;
     isCaptured = false;
     //pv.set(x, y);
     //colr = c;
@@ -69,6 +69,9 @@ public class Flag extends Object {
   void CaptureTheFlag ( Player player ) {
       this.CopyCoordinates( player);
   }
+  
+  
+ 
     
      
 }

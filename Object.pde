@@ -5,8 +5,8 @@ private class Object {
 
   int x;              // the current X coordinate of the object
   int y;              // the current Y coordinate of the object
-  int initalX;        // the inital screen X coordinate
-  int initalY;        // the inital screen Y coordinate
+  int homeX;        // the inital screen X coordinate
+  int homeY;        // the inital screen Y coordinate
   color initialColor;  // the inital color of the object
   
   // a vector storing the X and Y coordinates of the center of the object
@@ -23,8 +23,8 @@ private class Object {
     //pv = new PVector (0,0);
     x = 0;
     y = 0;
-    initalX = x;
-    initalY = y;
+    homeX = x;
+    homeY = y;
     colr = color(0,0,0);
     initialColor = colr;
     speed = 0;
@@ -36,8 +36,8 @@ private class Object {
   // called when a flag is dropped, game is restarted, etc...
   //
   void ResetCoordinates () {
-    x = initalX;
-    y = initalY;
+    x = homeX;
+    y = homeY;
     colr = initialColor;
     moveDirection = noMovement;
   }

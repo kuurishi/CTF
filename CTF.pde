@@ -16,18 +16,33 @@ final int leftDirection = 3;
 final int rightDirection = 4;
 
 // the maximum X and Y coordinates of the screen
-final int maxX = 500;
-final int maxY = 300;
+final int maxX = 800;
+final int maxY = 500;
+//
+final int flagSizeParameter = 30;
+//
+final int flag1HomeX = maxX-5-flagSizeParameter;        // the 'home' X position of flag1
+final int flag2HomeX = 5;         // the 'home' X position of flag2
+final int flagsHomeY = maxY/2;    // the 'home' Y position for both flags
+final int player1HomeX = 50;      // the 'home' X position of player1
+final int player2HomeX = maxX-50; // the 'home' X position of player2
+final int playersHomeY = maxY/2;    // the 'home' Y position for both flags
 
-Player player1 = new Player(50, 50, color(255, 20, 80));
-Player player2 = new Player(200, 200, color(140, 40, 40));
 
-Flag flag1 = new Flag( 30, maxY/2 , color(150, 40, 40));
-Flag flag2 = new Flag( maxX-30, maxY/2, color(40, 40, 150));
+Player player1 = new Player(player1HomeX, playersHomeY, color(255, 20, 80));
+Player player2 = new Player(player2HomeX, playersHomeY, color(140, 40, 40));
+
+Flag flag1 = new Flag( flag1HomeX, flagsHomeY, color(150, 40, 40));
+Flag flag2 = new Flag( flag2HomeX, flagsHomeY, color(40, 40, 150));
+
+boolean bDisplayMessage = false;
+String displayMessage;
+int startTime;
+final int DISPLAY_DURATION = 5000; // 5 seconds
 
 
 void setup() {
-  size(500, 300);
+  size(800, 500);
   frameRate(120);
 }
 
@@ -64,7 +79,6 @@ void Update ( int nr) {
     otherPlayer = player2;
     flag = flag1;
     otherFlag = flag2;
-    //init = f1init;
   }
   else {
     // we will be checking for the second player and the second flag
@@ -72,17 +86,16 @@ void Update ( int nr) {
     otherPlayer = player1;
     flag = flag2;
     otherFlag = flag1;
-    //init = f2init;
   }
   
   // 
   player.movePlayer(player.moveDirection);
+  player.checkBoundaryCollision();
   //
-  if ( flag.isFlagCaptured(otherPlayer) ) {
-    flag.CaptureTheFlag(otherPlayer);
+  if ( flag.isFlagCaptured(player) ) {
+    flag.CaptureTheFlag(player);
   }
   //
-  player.checkBoundaryCollision();
   //
 
   // check if collision between players 
@@ -98,4 +111,16 @@ void Update ( int nr) {
   player.drawPlayer();
   flag.drawFlag();
 
+  if (player.IsPlayerAtHomeWithFlag(flag) == true) {
+    // flag was captured and brought to player home!
+    player.score++;
+    displayMessage = "Player " + nr + " WINS!";
+    print(displayMessage);
+    // Record the time of the event
+    startTime = millis();    // time now
+    bDisplayMessage = true;
+    
+    player.ResetCoordinates();
+    flag.ResetCoordinates();
+  }
 }

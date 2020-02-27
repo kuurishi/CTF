@@ -4,18 +4,20 @@
 public class Player extends Object  {
 
   
-  int playerSize; //Radius of the Player (circle)
+  int playerSize; // the radius of the Player (circle)
+  int score;      // game score for the player
 
   //
   // Player constructor - set up the initalX, initalY and initalColor when the object is created
   //
   Player(int x, int y, color c) {
     playerSize = 50;      // TODO !!
-    this.x = initalX = x;
-    this.y = initalY = y;
+    this.x = homeX = x;
+    this.y = homeY = y;
     //pv.set(x,y);
     this.colr = initialColor = c;
     speed = 3;
+    score = 0;
   }
 
 
@@ -92,4 +94,56 @@ public class Player extends Object  {
       return;
     }
   }
+  
+  
+  //
+  // retuns true if:
+  //     first player brings the flag back to the left  of the screen
+  //    second player brings the flag back to the right of the screen
+  boolean IsPlayerAtHomeWithFlag ( Flag flag ) {
+    int playerNumber;
+
+    // first determine whether we are checking for the first player home or for the second player home X position?
+    if (this.homeX < maxX/2) {
+      // the inital X coordinate of the player is in the left part of the screen
+      playerNumber = 1;
+    }
+    else {
+      playerNumber = 2;
+    }
+    
+        
+    if ( flag.isCaptured == false ) {
+      // flag s not captured at all!
+      return false;
+    }
+    
+    
+    // the player is carrying the flag!
+    switch ( playerNumber ) {
+      case 1:
+        if (this.x <= this.homeX) {
+          print("flag 1 at home! ");
+          return true;
+        }
+        break;
+      case 2:
+        if (this.x >= this.homeX) {
+          print("flag 2 at home! ");
+          return true;
+        }
+        break;
+      default:
+        return false;     // wrong flag number
+    }
+    return false;
+  }
+    
+ 
+  
+  
+  
+  
+  
+  
 }

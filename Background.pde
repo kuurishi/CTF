@@ -7,8 +7,16 @@ void drawMap(){
   fill(60,30,200,90);
   rect(width/2,0,width/2,height); //blue background
   
-  
-  
-  
-  
+  textSize(32);
+  text("Player 1 score : "+player1.score, 50, 50);
+  text("Player 2 score : "+player2.score, maxX/2+50, 50);
+ 
+  if (bDisplayMessage == true ) {
+    if (millis() - startTime  <= DISPLAY_DURATION) {
+      text(displayMessage, maxX/2-100, maxY-50);
+    }
+    else {
+      bDisplayMessage = false;
+    }
+  }
 }
