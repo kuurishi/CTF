@@ -1,110 +1,112 @@
-boolean keyLeft, keyRight, keyUp, keyDown;
+//boolean keyLeft, keyRight, keyUp, keyDown;
 
 
-
-void keyReleased(){
-
+//
+// if a movement key was pressed, set the moveDirection of the object
+// this will eventuall start moving the object ( from movePlayer() method )
+//
+void keyPressed() {
   switch (key) {   //--------------------Player 1 Movement---------------------//
-  
   case 'a': 
-    player1.movePlayer(leftDirection);
-    keyLeft = false;
+  case 'A':
+    player1.moveDirection =  leftDirection;
     break;
   
   case 'd':  // right
-    player1.movePlayer(rightDirection);
-    keyRight = false;
+  case 'D':
+    player1.moveDirection = rightDirection;
     break;
 
   case 'w':
-    player1.movePlayer(upDirection);
-    keyUp = false;
+  case 'W':
+    player1.moveDirection = upDirection;
     break;
     
   case 's':
-    player1.movePlayer(downDirection);
-    keyDown = false;
+  case 'S':
+    player1.moveDirection = downDirection;
     break;
-  }       
-                   //--------------------Player 2 Movement---------------------//
-  switch (keyCode){
+  default:
+    break;
+   
+  }
+  
+                   
+  switch (keyCode){  //--------------------Player 2 Movement---------------------//
   case LEFT:
-    player2.movePlayer(leftDirection);
-    keyLeft = false;
+    player2.moveDirection = leftDirection;
     break;
   
   case RIGHT:
-    player2.movePlayer(rightDirection);
-    keyRight = false;
+    player2.moveDirection = rightDirection;
     break;
 
   case UP:
-    player2.movePlayer(upDirection);
-    keyUp = false;
+    player2.moveDirection = upDirection;
     break;
     
   case DOWN:
-    player2.movePlayer(downDirection);
-    keyDown = false;
+    player2.moveDirection = downDirection;
     break;
     
   default: 
-    println("unkown key: " + key);
+    //println("unkown key: " + key);
   }
   
 }
 
 
-void keyPressed() {
+//
+// if a movement key was released, set the moveDirection of the object
+// this will eventuall STOP moving the object ( from movePlayer() method )
+//
+void keyReleased(){
 
   switch (key) {   //--------------------Player 1 Movement---------------------//
-  
   case 'a': 
   case 'A':
-    player1.movePlayer(leftDirection); // = true;
-    keyLeft = true;
+    player1.moveDirection =  noMovement;
     break;
   
   case 'd':  // right
-    player1.movePlayer(rightDirection); // = true
-    keyRight = true;
+  case 'D':
+    player1.moveDirection = noMovement;
     break;
 
   case 'w':
-    player1.movePlayer(upDirection);
-    keyUp = true;
+  case 'W':
+    player1.moveDirection = noMovement;
     break;
     
   case 's':
-    player1.movePlayer(downDirection);
-    keyDown = true;
+  case 'S':
+    player1.moveDirection = noMovement;
     break;
+  default:
+    break;
+   
   }
   
-                   //--------------------Player 2 Movement---------------------//
-  switch (keyCode){
+                   
+  switch (keyCode){  //--------------------Player 2 Movement---------------------//
   case LEFT:
-    player2.movePlayer(leftDirection);
-    keyLeft = true;
+    player2.moveDirection = noMovement;
     break;
   
   case RIGHT:
-    player2.movePlayer(rightDirection);
-    keyRight = true;
+    player2.moveDirection = noMovement;
     break;
 
   case UP:
-    player2.movePlayer(upDirection);
-    keyUp = true;
+    player2.moveDirection = noMovement;
     break;
     
   case DOWN:
-    player2.movePlayer(downDirection);
-    keyDown = true;
+    player2.moveDirection = noMovement;
     break;
     
   default: 
-    println("unkown key: " + key);
+    //println("unkown key: " + key);
   }
   
 }

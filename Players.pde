@@ -1,60 +1,45 @@
-
-private class Object {
-
-  // a vector storing the X and Y coordinates of the center of the object
-  PVector pv;        // https://processing.org/tutorials/pvector/
-                     // https://natureofcode.com/book/chapter-1-vectors/
-  color colr;        // the color of the object
-  int speed;
-  int lastDirection;
-  //boolean wasMoved;
-  
-  Object () {
-    pv = new PVector (0,0);
-    colr = color(0,0,0);
-    speed = 0;
-    lastDirection = -1;
-    //wasMoved = false;
-  }
-  
-}
-
-
+//
+// class Player
+//
 public class Player extends Object  {
 
   
   int playerSize; //Radius of the Player (circle)
 
-
+  //
+  // Player constructor - set up the initalX, initalY and initalColor when the object is created
+  //
   Player(int x, int y, color c) {
-    playerSize = 50;
-    pv.set(x,y);
-    colr = c;
-    speed = 7;
+    playerSize = 50;      // TODO !!
+    this.x = initalX = x;
+    this.y = initalY = y;
+    //pv.set(x,y);
+    this.colr = initialColor = c;
+    speed = 3;
   }
 
 
   void drawPlayer() {
     stroke(0);
     fill(colr);
-    ellipse(pv.x, pv.y, playerSize, playerSize);
+    ellipse(x, y, playerSize, playerSize);
   }
 
 
   void checkBoundaryCollision () {
     
-    if ( pv.x < playerSize/2 ) {
-      pv.x  = playerSize;
+    if ( x < playerSize/2 ) {
+      x  = playerSize;
     }
-    else if ( pv.x + playerSize/2 > maxX ) {
-      pv.x = maxX - playerSize;
+    else if ( x + playerSize/2 > maxX ) {
+      x = maxX - playerSize;
     }
     
-    if ( pv.y  < playerSize/2 ) {
-      pv.y = playerSize;
+    if ( y  < playerSize/2 ) {
+      y = playerSize;
     }
-    else if ( pv.y + playerSize/2 > maxY ) {
-      pv.y = maxY -playerSize;
+    else if ( y + playerSize/2 > maxY ) {
+      y = maxY -playerSize;
     }  
   }
 
@@ -63,44 +48,44 @@ public class Player extends Object  {
 // http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
 //
   boolean checkCollision(Player other) {
-    float distance = PVector.dist( pv, other.pv);
+    PVector thisPlayer = new PVector ( this.x, this.y);
+    PVector otherPlayer = new PVector ( other.x, other.y);
+    float distance = PVector.dist ( thisPlayer, otherPlayer);
     if (distance < playerSize ) {
-      if (lastDirection == rightDirection) {
-        pv.x -= playerSize/2;
-      } else if (lastDirection == leftDirection) {
-        pv.x += playerSize/2;
-      } else if (lastDirection == upDirection) {
-        pv.y += playerSize/2;
-      } else if (lastDirection == downDirection) {
-        pv.y -= playerSize/2;
+      if (moveDirection == rightDirection) {
+        x -= playerSize/2;
+      } else if (moveDirection == leftDirection) {
+        x += playerSize/2;
+      } else if (moveDirection == upDirection) {
+        y += playerSize/2;
+      } else if (moveDirection == downDirection) {
+        y -= playerSize/2;
       }
       return true; 
     }
-    //wasMoved = false;
     return false;
   }
 
 
   void movePlayer(int direction) {
 
-    lastDirection = direction;
-    //wasMoved = true;
+    moveDirection = direction;
 
     switch ( direction ) {
     case upDirection:
-      pv.y -= speed;
+      y -= speed;
       break;
 
     case downDirection:
-      pv.y += speed;
+      y += speed;
       break;
 
     case leftDirection:
-      pv.x -= speed;
+      x -= speed;
       break;
 
     case rightDirection:
-      pv.x += speed;
+      x += speed;
       break;
 
     default:
