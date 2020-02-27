@@ -7,14 +7,14 @@ private class Object {
   color colr;        // the color of the object
   int speed;
   int lastDirection;
-  boolean wasMoved;
+  //boolean wasMoved;
   
   Object () {
     pv = new PVector (0,0);
     colr = color(0,0,0);
     speed = 0;
     lastDirection = -1;
-    wasMoved = false;
+    //wasMoved = false;
   }
   
 }
@@ -76,7 +76,7 @@ public class Player extends Object  {
       }
       return true; 
     }
-    wasMoved = false;
+    //wasMoved = false;
     return false;
   }
 
@@ -84,7 +84,7 @@ public class Player extends Object  {
   void movePlayer(int direction) {
 
     lastDirection = direction;
-    wasMoved = true;
+    //wasMoved = true;
 
     switch ( direction ) {
     case upDirection:
