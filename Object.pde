@@ -101,12 +101,16 @@ private class Object {
     if ( o1.objectType == ObjectType.T_POINT && o2.objectType == ObjectType.T_POINT ) {
       // distance between 2 points is easy..
       return dist(o1.x, o1.y, o2.x, o2.y);
+      
+      
     } else if ( o1.objectType == ObjectType.T_CIRCLE && o2.objectType == ObjectType.T_CIRCLE ) {
       // distance between 2 circles
       float distX = o1.x - o2.x;
       float distY = o1.y - o2.y;
       float distance = sqrt( (distX*distX) + (distY*distY) );
       return distance;
+      
+      
     } else if ( o1.objectType == ObjectType.T_CIRCLE && o2.objectType == ObjectType.T_RECTANGLE) {
       // distance between a circle and rectangle
       float radius = o1.size/2;   // the radius of the circle ( object 1 )

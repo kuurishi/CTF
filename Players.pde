@@ -89,41 +89,21 @@ public class Player extends Object {
 
 
 
-  //
+  // Checks whether the player is at home with the flag..
   // retuns true if:
   //     first player brings the flag back to the left  of the screen
   //    second player brings the flag back to the right of the screen
   boolean IsPlayerAtHomeWithFlag ( Flag flag ) {
-    int playerNumber;
-
-    // first determine whether we are checking for the first player home or for the second player home X position?
-    if (this.homeX < maxX/2) {
-      // the inital X coordinate of the player is in the left part of the screen
-      playerNumber = 1;
-    } else {
-      playerNumber = 2;
-    }
-    if ( flag.isCaptured == false ) {
-      // flag s not captured at all!
+    
+    if (flag.isCaptured == false )
+       return false;    // the flag is not captured at all
+       
+    // calculate the distance between the player X position and his home X position
+    // the Y position is set to zero for the calculation!
+    if ( dist(this.x, 0, this.homeX, 0) <= this.speed )  // less than 1 moving step ( speed )
+      return true;
+    else
       return false;
-    }
-    // the player is carrying the flag!
-    switch ( playerNumber ) {
-    case 1:
-      if (this.x <= this.homeX) {
-        print("flag 1 at home! ");
-        return true;
-      }
-      break;
-    case 2:
-      if (this.x >= this.homeX) {
-        print("flag 2 at home! ");
-        return true;
-      }
-      break;
-    default:
-      return false;     // wrong flag number
-    }
-    return false;
+    
   }
 }

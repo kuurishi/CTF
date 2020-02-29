@@ -6,13 +6,9 @@
 // http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
 //
 
-
-
-
-
 // the maximum X and Y coordinates of the screen
 final int maxX = 800;
-final int maxY = 500;
+final int maxY = 600;
 //
 final int flagSizeParameter = 30;
 final int playerSizeParameter = 50;
@@ -27,26 +23,30 @@ final float playersHomeY = maxY/2;    // the 'home' Y position for both flags
 PImage imgPlayer1;
 PImage imgPlayer2;
 
-
-
+// create the array of players
 Player player1 = new Player(player1HomeX, playersHomeY, color(255, 20, 80));
 Player player2 = new Player(player2HomeX, playersHomeY, color(140, 40, 40));
 Player[] players = {player1, player2};
 
+// create the array of flags
 Flag flag1 = new Flag( flag1HomeX, flagsHomeY, color(150, 40, 40));
 Flag flag2 = new Flag( flag2HomeX, flagsHomeY, color(40, 40, 150));
 Flag[] flags = {flag1, flag2};
 
+// display messages variables
 boolean bDisplayMessage = false;
 String displayMessage;
 int startTime;
 final int DISPLAY_DURATION = 5000; // 5 seconds
 
-
+GateState gameState = GateState.gameStartMenu;
+boolean isGameOver = false;
+int gameNumber = 0;
+final int MaxGames = 3;
 
 
 void setup() {
-  size(800, 500);
+  size(800, 600);
 
   //rectMode(CENTER);
   frameRate(120);
@@ -61,13 +61,52 @@ void draw() {
 
   background(255, 255, 255);
   //
-  // 1. keypresed() eventually updates the players positions (chanegs x, y coordinates )
-  // calls player.movePlayer() method, only if a move key was pressed
-  // 2. Check for walls collisions
-  // 3. Check players collision
-  // 4. Dispaly the players
-
   drawMap();
+  //
+  switch ( gameState ) {
+    case gameStartMenu:
+      GameStartMenu();
+      if (keyPressed) {
+         gameState = GateState.gamePlay;
+         gameNumber = 0;
+         players[0].score = players[1].score = 0;
+         isGameOver = false;
+      }
+      break;
+      
+    case gamePlay:
+      PlayTheGame();
+      DisplayGameMessages();
+      if (isGameOver) {
+        gameState = GateState.gameEndMenu;
+      }
+      break;
+      
+    case gameEndMenu:
+      GameEndMenu();
+      if ( keyPressed ) {        
+        if ( key == ' ' ) {
+          // space key - play again!
+          gameState = GateState.gameStartMenu;
+          isGameOver = false;
+        }
+        else if ( keyCode == ESC ){
+          exit();
+        }
+      }
+
+      break;
+  }
+
+} // end of Draw()
+
+
+
+
+
+void PlayTheGame () {
+  
+
 
   // for each player
   for ( int playerNr=0; playerNr<players.length; playerNr++ ) {
@@ -90,9 +129,9 @@ void draw() {
     for ( int otherPlayerNr=0; otherPlayerNr<players.length; otherPlayerNr++ ) {
       if ( playerNr != otherPlayerNr) {    // do not check for a player collision with himelf! :) 
         if ( player.CheckPlayersCollision(players[otherPlayerNr]) == true) {
-          // the player that we are checking now bumped into other player!
+          // the player that we are checking has now bumped into other player!
           if ( flag.isCaptured == true) {  // did the bumping player wear a flag?
-            // whoever bumps other, he drops the flag!
+            // whoever bumps other players, he drops the flag!
             flag.ResetCoordinates();
             flag.isCaptured = false;
           }
@@ -112,6 +151,12 @@ void draw() {
       player.ResetCoordinates();
       flag.ResetCoordinates();
       flag.isCaptured = false;
+      //
+      gameNumber++;
+      if (gameNumber >= MaxGames) {
+        gameState = GateState.gameEndMenu;
+      }
+      
     }
     // 
     players[playerNr].drawPlayer();
@@ -122,4 +167,4 @@ void draw() {
     flags[flagNr].drawFlag();
   }
   
-} // end of Draw()
+}
