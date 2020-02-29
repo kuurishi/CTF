@@ -1,6 +1,6 @@
 //--------------Kristina Kosseva-----------------//
 //---------------------CTF-----------------------//
-//            version 1.2   27-Feb-2020
+//            version 1.3   29-Feb-2020
 //
 //      referencies:
 // http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
