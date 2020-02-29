@@ -1,4 +1,3 @@
-
 //
 // class Flag - has additinal and isCaptured properties.
 //

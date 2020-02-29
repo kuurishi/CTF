@@ -24,13 +24,11 @@ public class Player extends Object {
 
 
   void checkBoundaryCollision () {
-
     if ( x < size/2 ) {
       x  = size;
     } else if ( x + size/2 > maxX ) {
       x = maxX - size;
     }
-
     if ( y  < size/2 ) {
       y = size;
     } else if ( y + size/2 > maxY ) {
@@ -43,7 +41,6 @@ public class Player extends Object {
   // http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
   //
   boolean CheckPlayersCollision(Player other) {
-    
     // clalculate the disctance between the two objects of a type T_CIRCLE ..
     float distance = Distance(this, other);
     // ee if the distance between them is less than the sum of their radii.
@@ -64,9 +61,32 @@ public class Player extends Object {
   }
 
 
-  void movePlayer(Directions direction) {
-    moveObject ( direction );
+  void movePlayer() {
+    //Directions dir = moveDirection;
+    moveObject ( );
   }
+
+
+
+
+  //
+  // returns true if the current flag is captured by the other player..
+  // sets the 'isCaptured' property of the flag
+  //
+  boolean isPlayerCapturingTheFlag(Flag flag) { 
+    boolean isFlagCaptured;
+    // calculate the distance between the player (circle) and this flag (rectangle)
+    float distance = Distance( this, flag );    
+
+    if (distance < flag.size/2 + this.size/2) {
+      isFlagCaptured = true;
+      //print("captured");
+    } else {
+      isFlagCaptured = false;
+    }
+    return isFlagCaptured;
+  }
+
 
 
   //
@@ -83,14 +103,10 @@ public class Player extends Object {
     } else {
       playerNumber = 2;
     }
-
-
     if ( flag.isCaptured == false ) {
       // flag s not captured at all!
       return false;
     }
-
-
     // the player is carrying the flag!
     switch ( playerNumber ) {
     case 1:

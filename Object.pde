@@ -1,11 +1,10 @@
 //
 // base class for a game object ( player or flag or ...)
 //
-enum ObjectType { 
-  T_NONE, T_POINT, T_CIRCLE, T_RECTANGLE, T_IMAGE
-};
+
 //
 private class Object {
+
   ObjectType objectType;      // the object type
   float x;              // the current X coordinate of the object
   float y;              // the current Y coordinate of the object
@@ -140,18 +139,16 @@ private class Object {
 
 
   //
-  // moves the object in the secified direction...
+  // moves the object in the direction specified in the direction property...
   //
-  void moveObject(Directions direction) {
-
-    moveDirection = direction;
-    if ( direction == Directions.upDirection )
+  void moveObject() {
+    if ( moveDirection == Directions.upDirection )
       y -= speed;
-    else if ( direction == Directions.downDirection )
+    else if ( moveDirection == Directions.downDirection )
       y += speed;
-    else if ( direction == Directions.leftDirection )
+    else if ( moveDirection == Directions.leftDirection )
       x -= speed;
-    else if ( direction == Directions.rightDirection )
+    else if ( moveDirection == Directions.rightDirection )
       x += speed;
   }
 

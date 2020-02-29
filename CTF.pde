@@ -5,11 +5,10 @@
 //      referencies:
 // http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
 //
-  
-  
 
-// Constatnts that define the object (player or flag or...) movement direction
-enum Directions {   noMovement, upDirection, downDirection, leftDirection, rightDirection };
+
+
+
 
 // the maximum X and Y coordinates of the screen
 final int maxX = 800;
@@ -28,11 +27,15 @@ final float playersHomeY = maxY/2;    // the 'home' Y position for both flags
 PImage imgPlayer1;
 PImage imgPlayer2;
 
+
+
 Player player1 = new Player(player1HomeX, playersHomeY, color(255, 20, 80));
 Player player2 = new Player(player2HomeX, playersHomeY, color(140, 40, 40));
+Player[] players = {player1, player2};
 
 Flag flag1 = new Flag( flag1HomeX, flagsHomeY, color(150, 40, 40));
 Flag flag2 = new Flag( flag2HomeX, flagsHomeY, color(40, 40, 150));
+Flag[] flags = {flag1, flag2};
 
 boolean bDisplayMessage = false;
 String displayMessage;
@@ -41,14 +44,16 @@ final int DISPLAY_DURATION = 5000; // 5 seconds
 
 
 
+
 void setup() {
   size(800, 500);
+
   //rectMode(CENTER);
   frameRate(120);
-   imgPlayer1 = loadImage("Player1.jpg");
-   imgPlayer2 = loadImage("Player2.jpg");
-   player1.image = imgPlayer1;
-   player2.image = imgPlayer2;
+  imgPlayer1 = loadImage("Player1.jpg");
+  imgPlayer2 = loadImage("Player2.jpg");
+  player1.image = imgPlayer1;
+  player2.image = imgPlayer2;
 }
 
 
@@ -64,68 +69,57 @@ void draw() {
 
   drawMap();
 
-  Update( 1);
-  Update( 2);
-
-}
-
-
-// Updates player1 or player2 depending on nr parameter
-// Updates flag1 or flag2 depending on nr parameter
-//
-void Update ( int nr) {
-  Player player, otherPlayer;
-  Flag flag, otherFlag;
-  //PVector init;
-  
-  if ( nr == 1 ) {
-    // we will be checking for the first player and the first flag
-    player = player1;
-    otherPlayer = player2;
-    flag = flag1;
-    otherFlag = flag2;
-  }
-  else {
-    // we will be checking for the second player and the second flag
-    player = player2;
-    otherPlayer = player1;
-    flag = flag2;
-    otherFlag = flag1;
-  }
-  
-  // 
-  player.movePlayer(player.moveDirection);
-  player.checkBoundaryCollision();
-  //
-  if ( flag.isFlagCaptured(player) ) {
-    flag.CaptureTheFlag(player);
-  }
-  //
-  //
-
-  // check if collision between players 
-  if ( player.CheckPlayersCollision(otherPlayer) == true) {
-    if ( flag.isCaptured == true) {
-      // drop the flag!
+  // for each player
+  for ( int playerNr=0; playerNr<players.length; playerNr++ ) {
+    // temporary variables for code clarity ..
+    Player player = players[playerNr];
+    Flag flag = flags[playerNr];
+    
+    // move players checking for boundary collisions
+    player.movePlayer();
+    player.checkBoundaryCollision();
+    //
+    // check if the current player has captured the flag?
+    if ( players[playerNr].isPlayerCapturingTheFlag(flag) ) {
+      flag.isCaptured = true;    // the flag object number is the same as the player number, i.e. flag1 belongs to player1
+      flag.CaptureTheFlag(player);
+    }
+    //
+    //
+    // check the current player for collision to other players
+    for ( int otherPlayerNr=0; otherPlayerNr<players.length; otherPlayerNr++ ) {
+      if ( playerNr != otherPlayerNr) {    // do not check for a player collision with himelf! :) 
+        if ( player.CheckPlayersCollision(players[otherPlayerNr]) == true) {
+          // the player that we are checking now bumped into other player!
+          if ( flag.isCaptured == true) {  // did the bumping player wear a flag?
+            // whoever bumps other, he drops the flag!
+            flag.ResetCoordinates();
+            flag.isCaptured = false;
+          }
+        }
+      }
+    }
+    //
+    if ( player.IsPlayerAtHomeWithFlag(flag) == true) {
+      // flag was captured and brought to player home!
+      player.score++;
+      displayMessage = "Player " + (playerNr+1) + " WINS!";
+      print(displayMessage);
+      // Record the time of the event
+      startTime = millis();    // time now
+      bDisplayMessage = true;
+      // play again!
+      player.ResetCoordinates();
       flag.ResetCoordinates();
       flag.isCaptured = false;
     }
+    // 
+    players[playerNr].drawPlayer();
+  } // for each player
+
+  // draw the flags
+  for ( int flagNr=0; flagNr<flags.length; flagNr++ ) {
+    flags[flagNr].drawFlag();
   }
-
-
-  player.drawPlayer();
-  flag.drawFlag();
-
-  if (player.IsPlayerAtHomeWithFlag(flag) == true) {
-    // flag was captured and brought to player home!
-    player.score++;
-    displayMessage = "Player " + nr + " WINS!";
-    print(displayMessage);
-    // Record the time of the event
-    startTime = millis();    // time now
-    bDisplayMessage = true;
-    
-    player.ResetCoordinates();
-    flag.ResetCoordinates();
-  }
-}
+  
+} // end of Draw()
