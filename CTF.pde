@@ -2,7 +2,7 @@
 //---------------------CTF-----------------------//
 //            version 1.2   27-Feb-2020
 //
-//      referencies:
+//      reference:
 // http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
 //
   
@@ -16,13 +16,13 @@ final int leftDirection = 3;
 final int rightDirection = 4;
 
 // the maximum X and Y coordinates of the screen
-final int maxX = 800;
-final int maxY = 500;
+final int maxX = 960;
+final int maxY = 480;
 //
 final int flagSizeParameter = 30;
 //
 final int flag1HomeX = maxX-5-flagSizeParameter;        // the 'home' X position of flag1
-final int flag2HomeX = 5;         // the 'home' X position of flag2
+final int flag2HomeX = 50;         // the 'home' X position of flag2
 final int flagsHomeY = maxY/2;    // the 'home' Y position for both flags
 final int player1HomeX = 50;      // the 'home' X position of player1
 final int player2HomeX = maxX-50; // the 'home' X position of player2
@@ -32,18 +32,23 @@ final int playersHomeY = maxY/2;    // the 'home' Y position for both flags
 Player player1 = new Player(player1HomeX, playersHomeY, color(255, 20, 80));
 Player player2 = new Player(player2HomeX, playersHomeY, color(140, 40, 40));
 
-Flag flag1 = new Flag( flag1HomeX, flagsHomeY, color(150, 40, 40));
-Flag flag2 = new Flag( flag2HomeX, flagsHomeY, color(40, 40, 150));
+
 
 boolean bDisplayMessage = false;
 String displayMessage;
 int startTime;
 final int DISPLAY_DURATION = 5000; // 5 seconds
 
+Flag flag1;
+Flag flag2;
 
 void setup() {
-  size(800, 500);
+  size(960, 480);
   frameRate(120);
+  
+  flag1 = new Flag( flag1HomeX, flagsHomeY);
+  flag2 = new Flag( flag2HomeX, flagsHomeY);
+  
 }
 
 
@@ -61,6 +66,9 @@ void draw() {
 
   Update( 1);
   Update( 2);
+  
+  
+  
 
 }
 
@@ -98,7 +106,7 @@ void Update ( int nr) {
   //
   //
 
-  // check if collision between players 
+  // check collision between players 
   if ( player.checkCollision(otherPlayer) == true) {
     if ( flag.isCaptured == true) {
       // drop the flag!
@@ -106,6 +114,7 @@ void Update ( int nr) {
       flag.isCaptured = false;
     }
   }
+  
 
 
   player.drawPlayer();
@@ -114,7 +123,7 @@ void Update ( int nr) {
   if (player.IsPlayerAtHomeWithFlag(flag) == true) {
     // flag was captured and brought to player home!
     player.score++;
-    displayMessage = "Player " + nr + " WINS!";
+    displayMessage = "Player " + nr + " SCORES!";
     print(displayMessage);
     // Record the time of the event
     startTime = millis();    // time now
@@ -122,5 +131,14 @@ void Update ( int nr) {
     
     player.ResetCoordinates();
     flag.ResetCoordinates();
+    
   }
+
+
+    if(player.score == 3){ //--------------------------- DISPLAY WINNER & RESTART GAME(displays restart button. if restart button is pressed, set score to 0 and restart coordinates) ---------------------------//
+      // flag was brought to player home 3 times
+      displayMessage = "Player " + nr + " WINS!";
+      
+    }
+    
 }

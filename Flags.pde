@@ -7,15 +7,20 @@ public class Flag extends Object {
   
   int flagSize;       // The radius of the flag (rect)
   boolean isCaptured;
-
+  PImage[]Butterfly= new PImage[7];
+  int random;
 
   //
   // Flag constructor - sets the default coordinates and default color
   //
-  Flag(int x, int y, color c) {
+  Flag(int x, int y) {
     homeX = x;
     homeY = y;
-    initialColor = c;
+    random = (int) random(0,7);
+    for(int i = 0; i < 7; i++){
+      Butterfly[i] = loadImage("flag" + (i+1) + ".png");
+    }
+    
     ResetCoordinates();    // sets the current coordinates and color to the default (inital) values; 
     flagSize = flagSizeParameter;
     isCaptured = false;
@@ -29,14 +34,15 @@ public class Flag extends Object {
   // draws the flag in different color, depending on whether the flag was captured or not
   //
   void drawFlag() {
-    stroke(0);
-    if (isCaptured == true){
-      fill(20,20,20);
-    }
-    else{
-      fill(colr);
-    }
-    rect(x, y, flagSize, flagSize);
+    //stroke(0);
+    //if (isCaptured == true){
+    //  fill(20,20,20);
+    //}
+    //else{
+    //  fill(colr);
+    //}
+    println("butterfly");
+    image(Butterfly[random], homeX, homeY,flagSize,flagSize);
   }
   
   

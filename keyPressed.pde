@@ -3,7 +3,7 @@
 
 //
 // if a movement key was pressed, set the moveDirection of the object
-// this will eventuall start moving the object ( from movePlayer() method )
+// this will eventually start moving the object ( from movePlayer() method )
 //
 void keyPressed() {
   switch (key) {   //--------------------Player 1 Movement---------------------//
@@ -50,7 +50,7 @@ void keyPressed() {
     break;
     
   default: 
-    //println("unkown key: " + key);
+    break;
   }
   
 }
@@ -106,7 +106,7 @@ void keyReleased(){
     break;
     
   default: 
-    //println("unkown key: " + key);
+    break;
   }
   
 }

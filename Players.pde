@@ -1,23 +1,27 @@
 //
 // class Player
 //
-public class Player extends Object  {
+public class Player extends Object {
 
-  
+
   int playerSize; // the radius of the Player (circle)
   int score;      // game score for the player
+  boolean isWinner;
+  PImage pi;
+
 
   //
   // Player constructor - set up the initalX, initalY and initalColor when the object is created
   //
   Player(int x, int y, color c) {
-    playerSize = 50;      // TODO !!
+    playerSize = 50;      
     this.x = homeX = x;
     this.y = homeY = y;
     //pv.set(x,y);
     this.colr = initialColor = c;
     speed = 3;
     score = 0;
+    isWinner = false;
   }
 
 
@@ -29,26 +33,24 @@ public class Player extends Object  {
 
 
   void checkBoundaryCollision () {
-    
+
     if ( x < playerSize/2 ) {
       x  = playerSize;
-    }
-    else if ( x + playerSize/2 > maxX ) {
+    } else if ( x + playerSize/2 > maxX ) {
       x = maxX - playerSize;
     }
-    
+
     if ( y  < playerSize/2 ) {
       y = playerSize;
-    }
-    else if ( y + playerSize/2 > maxY ) {
+    } else if ( y + playerSize/2 > maxY ) {
       y = maxY -playerSize;
-    }  
+    }
   }
 
 
-//
-// http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
-//
+  //
+  // http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
+  //
   boolean checkCollision(Player other) {
     PVector thisPlayer = new PVector ( this.x, this.y);
     PVector otherPlayer = new PVector ( other.x, other.y);
@@ -63,7 +65,7 @@ public class Player extends Object  {
       } else if (moveDirection == downDirection) {
         y -= playerSize/2;
       }
-      return true; 
+      return true;
     }
     return false;
   }
@@ -94,8 +96,8 @@ public class Player extends Object  {
       return;
     }
   }
-  
-  
+
+
   //
   // retuns true if:
   //     first player brings the flag back to the left  of the screen
@@ -107,43 +109,70 @@ public class Player extends Object  {
     if (this.homeX < maxX/2) {
       // the inital X coordinate of the player is in the left part of the screen
       playerNumber = 1;
-    }
-    else {
+    } else {
       playerNumber = 2;
     }
-    
-        
+
+
     if ( flag.isCaptured == false ) {
-      // flag s not captured at all!
+      // flag is not captured at all
       return false;
     }
-    
-    
-    // the player is carrying the flag!
+
+
+    // the player is carrying the flag
     switch ( playerNumber ) {
-      case 1:
-        if (this.x <= this.homeX) {
-          print("flag 1 at home! ");
-          return true;
-        }
-        break;
-      case 2:
-        if (this.x >= this.homeX) {
-          print("flag 2 at home! ");
-          return true;
-        }
-        break;
-      default:
-        return false;     // wrong flag number
+    case 1:
+      if (this.x <= this.homeX) {
+        print("flag 1 at home! ");
+        return true;
+      }
+      break;
+    case 2:
+      if (this.x >= this.homeX) {
+        print("flag 2 at home! ");
+        return true;
+      }
+      break;
+    default:
+      return false;     // wrong flag number
     }
     return false;
   }
-    
- 
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+  boolean isWinner() {
+
+
+    if (score == 3) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  void displayWinner() {
+    String str1; 
+    String str2;
+
+    if (isWinner == false) { //no winner, nothing happens
+      return;
+    }
+
+    if (isWinner == true) {  //winner
+      str1 = "Player wins!";
+      str2 = "Click to restart...";
+      fill(50);
+      textSize(40);
+      text(str1, maxX/3.5, maxY/6.5); 
+
+
+      text(str2, maxX/2, maxY/4);  // use textAlign(LEFT CORNER, CENTER);.....
+    }
+  }
 }
