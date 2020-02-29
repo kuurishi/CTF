@@ -64,27 +64,38 @@ private class Object {
   // draws the object depending on his objectType
   //
   void Draw() {
-    switch (objectType) {
-    case T_CIRCLE:
-      stroke(0);
-      fill(colr);
-      ellipse(x, y, size, size);
-      break;
-    case T_RECTANGLE:
-      stroke(1);
-      fill(colr);
-      rect(x, y, size, size);
-      break;
-    case T_IMAGE:
-      if (image != null) {
+    
+    if ( image != null )
+    {
+      // we have image - draw it!
         imageMode(CENTER);  // Draw image using CENTER mode
-        image(image, x, y, 60, 60);  // the two additional parameters are  are used to set the image's width and height.
-      }
-      break;
-    case T_NONE:
-    default:
-      break;
+        image(image, x, y, size, size);  // the two additional parameters are  are used to set the image's width and height.
     }
+    else {
+      // Circle or Cectangle or ...
+      switch (objectType) {
+        case T_CIRCLE:
+          stroke(0);
+          fill(colr);
+          ellipse(x, y, size, size);
+          break;
+        case T_RECTANGLE:
+          stroke(1);
+          fill(colr);
+          rect(x, y, size, size);
+          break;
+        case T_IMAGE:
+          if (image != null) {
+            imageMode(CENTER);  // Draw image using CENTER mode
+            image(image, x, y, 60, 60);  // the two additional parameters are  are used to set the image's width and height.
+          }
+          break;
+        case T_NONE:
+        default:
+          break;
+        }
+    }
+
   }
 
 

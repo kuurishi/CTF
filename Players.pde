@@ -6,10 +6,10 @@ public class Player extends Object {
   int score;      // game score for the player
 
   //
-  // Player constructor - set up the initalX, initalY and initalColor when the object is created
+  // Player constructor - set up the initalX, initalY and initalColor when the object is created as a Circle..
   //
   Player(float x, float y, color c) {
-    super(x,y,c);                      // set the object x,y and color.
+    super(x, y, c);                      // set the object x,y and color.
     objectType = ObjectType.T_CIRCLE;
     size = playerSizeParameter;        // 50 diameter
     speed = 3;
@@ -94,16 +94,15 @@ public class Player extends Object {
   //     first player brings the flag back to the left  of the screen
   //    second player brings the flag back to the right of the screen
   boolean IsPlayerAtHomeWithFlag ( Flag flag ) {
-    
+
     if (flag.isCaptured == false )
-       return false;    // the flag is not captured at all
-       
+      return false;    // the flag is not captured at all
+
     // calculate the distance between the player X position and his home X position
     // the Y position is set to zero for the calculation!
     if ( dist(this.x, 0, this.homeX, 0) <= this.speed )  // less than 1 moving step ( speed )
       return true;
     else
       return false;
-    
   }
 }

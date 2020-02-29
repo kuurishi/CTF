@@ -50,8 +50,8 @@ void setup() {
 
   //rectMode(CENTER);
   frameRate(120);
-  imgPlayer1 = loadImage("Player1.jpg");
-  imgPlayer2 = loadImage("Player2.jpg");
+  imgPlayer1 = loadImage("BoyPlayer.png");
+  imgPlayer2 = loadImage("GirlPlayer.png");
   player1.image = imgPlayer1;
   player2.image = imgPlayer2;
 }
@@ -67,10 +67,15 @@ void draw() {
     case gameStartMenu:
       GameStartMenu();
       if (keyPressed) {
-         gameState = GateState.gamePlay;
+         for ( int playerNr=0; playerNr<players.length; playerNr++ ) {
+           players[playerNr].score = 0;
+           players[playerNr].ResetCoordinates();
+           flags[playerNr].ResetCoordinates();
+           flags[playerNr].isCaptured = false;
+         }
          gameNumber = 0;
-         players[0].score = players[1].score = 0;
          isGameOver = false;
+         gameState = GateState.gamePlay;
       }
       break;
       
