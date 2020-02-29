@@ -6,6 +6,11 @@ void drawMap() {
 
   fill(60, 30, 200, 90);
   rect(width/2, 0, width/2, height); //blue background
+  
+  // draw the obstacles map
+  for ( int obst=0; obst<obstacles.length; obst++ ) {
+    obstacles[obst].Draw();
+  }
 }
 
 

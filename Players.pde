@@ -9,7 +9,7 @@ public class Player extends Object {
   // Player constructor - set up the initalX, initalY and initalColor when the object is created as a Circle..
   //
   Player(float x, float y, color c) {
-    super(x, y, c);                      // set the object x,y and color.
+    super(x, y, playerSizeParameter, playerSizeParameter, c);                      // set the object x,y and color.
     objectType = ObjectType.T_CIRCLE;
     size = playerSizeParameter;        // 50 diameter
     speed = 3;
@@ -59,6 +59,31 @@ public class Player extends Object {
     }
     return false;
   }
+
+
+  //
+  // Check Player Collision to Obstacle
+  boolean CheckPlayerCollisionToObstacle(Obstacle obst) {
+    // clalculate the disctance between the two objects of a type T_CIRCLE and T_RECTANGLE
+    float distance = Distance(this, obst);
+    // if the distance between them is less than the radius of the player
+    if (distance < (this.size/2 + speed)) {            // add speed for safety ( this is one step ahead in the movement direction )
+      // move the player in the bacward direction!
+      if (moveDirection == Directions.rightDirection) {
+        x -= size/4;
+      } else if (moveDirection == Directions.leftDirection) {
+        x += size/4;
+      } else if (moveDirection == Directions.upDirection) {
+        y += size/4;
+      } else if (moveDirection == Directions.downDirection) {
+        y -= size/4;
+      }
+      return true;
+    }
+    return false;
+  }
+
+
 
 
   void movePlayer() {

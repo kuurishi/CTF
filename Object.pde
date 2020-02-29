@@ -10,7 +10,9 @@ private class Object {
   float y;              // the current Y coordinate of the object
   float homeX;          // the inital screen X coordinate
   float homeY;          // the inital screen Y coordinate
-  float size;           // the size of the object
+  float size;           // the size of the object ( diameter for cilce )
+  float h;              // height
+  float w;              // width;
   color colr;           // the color of the object
   color initialColor;   // the inital color of the object
   PImage image;          // the PNG image for this object
@@ -31,10 +33,12 @@ private class Object {
   //
   // Object constructor sets the x, y, color and default(home) x/y coordinates
   //
-  Object (float xPar, float yPar, color cPar) {
+  Object (float xPar, float yPar, float hPar, float wPar, color cPar) {
     Defaults();
     x = xPar;
     y = yPar;
+    h = hPar;
+    w = wPar;
     colr = cPar;
     homeX = x;
     homeY = y;
@@ -51,7 +55,7 @@ private class Object {
     y = 0;
     homeX = x;
     homeY = y;
-    size = 50;
+    size = 50;                // !!
     colr = color(0, 0, 0);
     initialColor = colr;
     image = null;
@@ -69,7 +73,7 @@ private class Object {
     {
       // we have image - draw it!
         imageMode(CENTER);  // Draw image using CENTER mode
-        image(image, x, y, size, size);  // the two additional parameters are  are used to set the image's width and height.
+        image(image, x, y, h, w);  // the two additional parameters are  are used to set the image's width and height.
     }
     else {
       // Circle or Cectangle or ...
@@ -77,12 +81,12 @@ private class Object {
         case T_CIRCLE:
           stroke(0);
           fill(colr);
-          ellipse(x, y, size, size);
+          ellipse(x, y, h, w);
           break;
         case T_RECTANGLE:
           stroke(1);
           fill(colr);
-          rect(x, y, size, size);
+          rect(x, y, h, w);
           break;
         case T_IMAGE:
           if (image != null) {
@@ -125,20 +129,21 @@ private class Object {
     } else if ( o1.objectType == ObjectType.T_CIRCLE && o2.objectType == ObjectType.T_RECTANGLE) {
       // distance between a circle and rectangle
       float radius = o1.size/2;   // the radius of the circle ( object 1 )
-      float rw = o2.size/2;    // the width of the rectange ( object 2)
-      float rh = o2.size/2;   // the height of the rectange ( object 2 )
+      //float rw = o2.w;    // the width of the rectange ( object 2)
+//float rh = o2.h;   // the height of the rectange ( object 2 )
       // temporary variables to set edges for testing
       float testX = o1.x;    
       float testY = o1.y;
       // which edge is closest?
       if (o1.x < o2.x)          //  if circle is LEFT from the rectangle
         testX = o2.x;           //     then test against the rectangle left edge
-      else if (o1.x > o2.x+rw)  // if circle is RIGHT from the rectangle
-        testX = o2.x + rw;      //     then test against the rectangle right edge
+      else if (o1.x > o2.x+o2.h)  // if circle is RIGHT from the rectangle
+        testX = o2.x + o2.h;      //     then test against the rectangle right edge
+        
       if (o1.y < o2.y)          // if circle is ABOVE the rectange
         testY = o2.y;           //     then test check against the rectangle TOP edge
-      else if (o1.y > o2.y+rh)  // if circle is ABOVE the rectange
-        testY = o2.y + rh;      //     then test the rectangle BOTTOM edge
+      else if (o1.y > o2.y+o2.w)  // if circle is ABOVE the rectange
+        testY = o2.y + o2.w;      //     then test the rectangle BOTTOM edge
 
       // get the X and Y distances between the circle center to the closest edge of the rectangle
       float distX = o1.x-testX;
@@ -195,8 +200,8 @@ private class Object {
   // attaches the object to the upper right position of the other object ...
   //
   void AttachToUpperRight ( Object other ) {
-    this.x = other.x + other.size/2;
-    this.y = other.y - other.size/2;
+    this.x = other.x + other.h/2;
+    this.y = other.y - other.w/2;
   }
   
 }

@@ -9,7 +9,7 @@ public class Flag extends Object {
   // Flag constructor - sets the default coordinates and default color
   //
   Flag(float x, float y, color c) {
-    super(x, y, c);    // sets the base class constructor 
+    super(x, y, flagSizeParameter, flagSizeParameter, c);    // sets the base class constructor 
     objectType = ObjectType.T_RECTANGLE;
     size = flagSizeParameter;    
     isCaptured = false;

@@ -1,6 +1,6 @@
 //--------------Kristina Kosseva-----------------//
 //---------------------CTF-----------------------//
-//            version 1.3   29-Feb-2020
+//            version 1.4   29-Feb-2020
 //
 //      referencies:
 // http://www.jeffreythompson.org/collision-detection/object_oriented_collision.php
@@ -29,6 +29,13 @@ Player[] players = {player1, player2};
 Flag flag1 = new Flag( flag1HomeX, flagsHomeY, color(150, 40, 40));
 Flag flag2 = new Flag( flag2HomeX, flagsHomeY, color(40, 40, 150));
 Flag[] flags = {flag1, flag2};
+
+// create the array of Obstacles
+Obstacle obstacle1 = new Obstacle( 200, 100, 30, 200, color(150, 40, 40));
+Obstacle obstacle2 = new Obstacle( 400, 200, 30, 200, color(40, 40, 150));
+Obstacle obstacle3 = new Obstacle( 600, 300, 30, 200, color(40, 40, 150));
+Obstacle[] obstacles = {obstacle1, obstacle2, obstacle3};
+
 
 // display messages variables
 boolean bDisplayMessage = false;
@@ -117,6 +124,13 @@ void PlayTheGame () {
     // move players checking for boundary collisions
     player.movePlayer();
     player.checkBoundaryCollision();
+    //
+    // check for collisions with all obstacles
+    for ( int obst=0; obst<obstacles.length; obst++ ){
+      player.CheckPlayerCollisionToObstacle(obstacles[obst]);
+    }
+    
+    
     //
     // check if the current player has captured the flag?
     if ( players[playerNr].isPlayerCapturingTheFlag(flag) ) {
