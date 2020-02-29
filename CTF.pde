@@ -9,25 +9,24 @@
   
 
 // Constatnts that define the object (player or flag or...) movement direction
-final int noMovement = 0;
-final int upDirection = 1;
-final int downDirection = 2;
-final int leftDirection = 3;
-final int rightDirection = 4;
+enum Directions {   noMovement, upDirection, downDirection, leftDirection, rightDirection };
 
 // the maximum X and Y coordinates of the screen
 final int maxX = 800;
 final int maxY = 500;
 //
 final int flagSizeParameter = 30;
+final int playerSizeParameter = 50;
 //
-final int flag1HomeX = maxX-5-flagSizeParameter;        // the 'home' X position of flag1
-final int flag2HomeX = 5;         // the 'home' X position of flag2
-final int flagsHomeY = maxY/2;    // the 'home' Y position for both flags
-final int player1HomeX = 50;      // the 'home' X position of player1
-final int player2HomeX = maxX-50; // the 'home' X position of player2
-final int playersHomeY = maxY/2;    // the 'home' Y position for both flags
+final float flag1HomeX = maxX-5-flagSizeParameter;        // the 'home' X position of flag1
+final float flag2HomeX = 5;         // the 'home' X position of flag2
+final float flagsHomeY = maxY/2;    // the 'home' Y position for both flags
+final float player1HomeX = 50;      // the 'home' X position of player1
+final float player2HomeX = maxX-50; // the 'home' X position of player2
+final float playersHomeY = maxY/2;    // the 'home' Y position for both flags
 
+PImage imgPlayer1;
+PImage imgPlayer2;
 
 Player player1 = new Player(player1HomeX, playersHomeY, color(255, 20, 80));
 Player player2 = new Player(player2HomeX, playersHomeY, color(140, 40, 40));
@@ -41,9 +40,15 @@ int startTime;
 final int DISPLAY_DURATION = 5000; // 5 seconds
 
 
+
 void setup() {
   size(800, 500);
+  //rectMode(CENTER);
   frameRate(120);
+   imgPlayer1 = loadImage("Player1.jpg");
+   imgPlayer2 = loadImage("Player2.jpg");
+   player1.image = imgPlayer1;
+   player2.image = imgPlayer2;
 }
 
 
@@ -99,7 +104,7 @@ void Update ( int nr) {
   //
 
   // check if collision between players 
-  if ( player.checkCollision(otherPlayer) == true) {
+  if ( player.CheckPlayersCollision(otherPlayer) == true) {
     if ( flag.isCaptured == true) {
       // drop the flag!
       flag.ResetCoordinates();

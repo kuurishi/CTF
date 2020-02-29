@@ -9,22 +9,22 @@ void keyPressed() {
   switch (key) {   //--------------------Player 1 Movement---------------------//
   case 'a': 
   case 'A':
-    player1.moveDirection =  leftDirection;
+    player1.moveDirection =  Directions.leftDirection;
     break;
   
   case 'd':  // right
   case 'D':
-    player1.moveDirection = rightDirection;
+    player1.moveDirection = Directions.rightDirection;
     break;
 
   case 'w':
   case 'W':
-    player1.moveDirection = upDirection;
+    player1.moveDirection = Directions.upDirection;
     break;
     
   case 's':
   case 'S':
-    player1.moveDirection = downDirection;
+    player1.moveDirection = Directions.downDirection;
     break;
   default:
     break;
@@ -34,19 +34,19 @@ void keyPressed() {
                    
   switch (keyCode){  //--------------------Player 2 Movement---------------------//
   case LEFT:
-    player2.moveDirection = leftDirection;
+    player2.moveDirection = Directions.leftDirection;
     break;
   
   case RIGHT:
-    player2.moveDirection = rightDirection;
+    player2.moveDirection = Directions.rightDirection;
     break;
 
   case UP:
-    player2.moveDirection = upDirection;
+    player2.moveDirection = Directions.upDirection;
     break;
     
   case DOWN:
-    player2.moveDirection = downDirection;
+    player2.moveDirection = Directions.downDirection;
     break;
     
   default: 
@@ -65,22 +65,22 @@ void keyReleased(){
   switch (key) {   //--------------------Player 1 Movement---------------------//
   case 'a': 
   case 'A':
-    player1.moveDirection =  noMovement;
+    player1.moveDirection =  Directions.noMovement;
     break;
   
   case 'd':  // right
   case 'D':
-    player1.moveDirection = noMovement;
+    player1.moveDirection = Directions.noMovement;
     break;
 
   case 'w':
   case 'W':
-    player1.moveDirection = noMovement;
+    player1.moveDirection = Directions.noMovement;
     break;
     
   case 's':
   case 'S':
-    player1.moveDirection = noMovement;
+    player1.moveDirection = Directions.noMovement;
     break;
   default:
     break;
@@ -90,19 +90,19 @@ void keyReleased(){
                    
   switch (keyCode){  //--------------------Player 2 Movement---------------------//
   case LEFT:
-    player2.moveDirection = noMovement;
+    player2.moveDirection = Directions.noMovement;
     break;
   
   case RIGHT:
-    player2.moveDirection = noMovement;
+    player2.moveDirection = Directions.noMovement;
     break;
 
   case UP:
-    player2.moveDirection = noMovement;
+    player2.moveDirection = Directions.noMovement;
     break;
     
   case DOWN:
-    player2.moveDirection = noMovement;
+    player2.moveDirection = Directions.noMovement;
     break;
     
   default: 
