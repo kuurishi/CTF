@@ -51,6 +51,7 @@ public class Flag extends Object {
   // set the captured flag coordinates to be the same as the player that captured it!
   //
   void CaptureTheFlag ( Player player ) {
-    this.CopyCoordinates( player);
+    //this.CopyCoordinates( player);
+    this.AttachToUpperRight( player);
   }
 }

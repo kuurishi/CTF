@@ -181,6 +181,7 @@ private class Object {
     moveDirection = Directions.noMovement;
   }
 
+
   //
   // copyes the X and Y coordinates of another object
   //
@@ -188,4 +189,14 @@ private class Object {
     this.x = other.x;
     this.y = other.y;
   }
+  
+  
+  //
+  // attaches the object to the upper right position of the other object ...
+  //
+  void AttachToUpperRight ( Object other ) {
+    this.x = other.x + other.size/2;
+    this.y = other.y - other.size/2;
+  }
+  
 }

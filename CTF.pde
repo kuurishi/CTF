@@ -20,9 +20,6 @@ final float player1HomeX = 50;      // the 'home' X position of player1
 final float player2HomeX = maxX-50; // the 'home' X position of player2
 final float playersHomeY = maxY/2;    // the 'home' Y position for both flags
 
-PImage imgPlayer1;
-PImage imgPlayer2;
-
 // create the array of players
 Player player1 = new Player(player1HomeX, playersHomeY, color(255, 20, 80));
 Player player2 = new Player(player2HomeX, playersHomeY, color(140, 40, 40));
@@ -47,13 +44,11 @@ final int MaxGames = 3;
 
 void setup() {
   size(800, 600);
-
-  //rectMode(CENTER);
   frameRate(120);
-  imgPlayer1 = loadImage("BoyPlayer.png");
-  imgPlayer2 = loadImage("GirlPlayer.png");
-  player1.image = imgPlayer1;
-  player2.image = imgPlayer2;
+  player1.image = loadImage("BoyPlayer.png");
+  player2.image = loadImage("GirlPlayer.png");
+  flag1.image = loadImage("flag1.png");
+  flag2.image = loadImage("flag2.png");
 }
 
 
@@ -125,8 +120,8 @@ void PlayTheGame () {
     //
     // check if the current player has captured the flag?
     if ( players[playerNr].isPlayerCapturingTheFlag(flag) ) {
-      flag.isCaptured = true;    // the flag object number is the same as the player number, i.e. flag1 belongs to player1
-      flag.CaptureTheFlag(player);
+      flag.isCaptured = true;        // the flag object number is the same as the player number, i.e. flag1 belongs to player1
+      flag.CaptureTheFlag(player);   // make the flag coordinates to match the player's coordinates
     }
     //
     //
